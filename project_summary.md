@@ -1,33 +1,11 @@
-# Project Title
-Insert the name of your project
+# Omniscience
 
 ## Authors
-- Insert main author name, surname, github account
-- Insert other author(s) name, surname, github account (one per list element)
+- [Martynas Petkevičius](https://github.com/MartynasPetkevicius "GitHub account")
 
 ## Description
-Insert a description containing about 100 to 150 words, including your motivation and the meaning behind your idea and execution. The Judges will be keen to know how your idea pushes the boundaries of code and technology. 
+_Omnisciense_ is a recursive journey through experiences where the act of experiencing it is part of this journey too. While travelling think of where your subjective perception ends and the objective existence begins.
 
-## Link to Prototype
-NOTE: If your project lives online you can add one or more links here. Make sure you have a stable version of your project running before linking it.
+From a technological viewpoint _Omniscience_ is collage of video clips, each showing a scene with some screen in it. Each scene ends with camera zooming on a screen and it in turn displays a beginning of a subsequent scene. The final scene ends with a beginning of the first one closing the loop and making for a single infinite film.
 
-[Example Link](http://www.google.com "Example Link")
-
-## Example Code
-NOTE: Wrap your code blocks or any code citation by using ``` like the example below.
-```
-function test() {
-  console.log("Printing a test");
-}
-```
-## Links to External Libraries
- NOTE: You can also use this space to link to external libraries or Github repositories you used on your project.
-
-[Example Link](http://www.google.com "Example Link")
-
-## Images & Videos
-NOTE: For additional images you can either use a relative link to an image on this repo or an absolute link to an externally hosted image.
-
-![Example Image](project_images/cover.jpg?raw=true "Example Image")
-
-https://www.youtube.com/watch?v=30yGOxJJ2PQ
+The installation at exhibition will consist of screen showing the aforementioned film and a hidden camera filming people watching this film. This footage will be dynamically added to the loop, making the act of watching film part of that same film.

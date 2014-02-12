@@ -1,16 +1,11 @@
 {
     "technologies": {
-        "apis": [
-            "insert apis"
-        ],
-        "platforms": [
-            "insert platforms"
-        ],
-        "toolkits": [
-            "insert toolkits"
-        ]
+        "apis": [],
+        "platforms": [],
+        "toolkits": []
     },
     "themes": [
-        "insert themes"
+        "subject-object problem",
+		"problem of other minds"
     ]
 }
