@@ -3,7 +3,7 @@ package com.techn.omnisciencevideoeditor.screendetector;
 import java.awt.Color;
 
 public class Filter {
-
+    private static final Color FILTER_COLOR = new Color(0, 255, 0);
     private double tolerance;
 
     public Filter(double tolerance) {
@@ -27,8 +27,11 @@ public class Filter {
 
     private boolean colorFilterFunction(int rgb) {
         Color color = new Color(rgb);
-        return Math.sqrt(color.getRed() * color.getRed() + color.getGreen() * color.getGreen()
-                + color.getBlue() * color.getBlue()) <= tolerance;
+        int redDifference = color.getRed() - FILTER_COLOR.getRed();
+        int greenDifference = color.getGreen()- FILTER_COLOR.getGreen();
+        int blueDifference = color.getBlue() - FILTER_COLOR.getBlue();
+        return Math.sqrt(redDifference * redDifference + greenDifference * greenDifference
+                + blueDifference * blueDifference) <= tolerance;
     }
 
     public void setTolerance(double tolerance) {
