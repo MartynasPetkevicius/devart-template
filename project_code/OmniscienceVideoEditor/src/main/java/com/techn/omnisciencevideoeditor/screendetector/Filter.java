@@ -6,6 +6,7 @@ import java.awt.Dimension;
 
 public class Filter {
 
+    public static final double MAX_TOLERANCE_VALUE = Math.sqrt(3 * 255 * 255);
     private static final Color COLOR_FILTER = new Color(0, 255, 0);
     private double tolerance;
 

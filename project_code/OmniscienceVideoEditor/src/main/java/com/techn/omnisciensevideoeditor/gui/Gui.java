@@ -13,9 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -105,7 +102,12 @@ public class Gui {
                         JOptionPane.showMessageDialog(frame, "Invalid image file", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         sourceTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
-                        previewPanel.setImage(image);
+                        previewPanel.setSourceDimension(new Dimension(image.getWidth(), image.getHeight()));
+                        previewPanel.setLayer(LayerKey.IMAGE, new ImageLayer(image));
+                        int[][] imageArray = ImageUtils.bufferedImageToArray(image);
+                        Filter filter = new Filter(100);
+                        BufferedImage filteredImage = ImageUtils.arrayToBinaryImage(filter.filter(imageArray), Color.WHITE);
+                        previewPanel.setLayer(LayerKey.COLOR_FILTER, new ImageLayer(filteredImage));
                         previewPanel.repaint();
                     }
                 } catch (IOException ex) {
