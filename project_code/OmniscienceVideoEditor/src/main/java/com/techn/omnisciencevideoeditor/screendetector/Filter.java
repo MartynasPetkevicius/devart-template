@@ -34,6 +34,10 @@ public class Filter {
                 + blueDifference * blueDifference) <= tolerance;
     }
 
+    public double getTolerance() {
+        return tolerance;
+    }
+
     public void setTolerance(double tolerance) {
         this.tolerance = tolerance;
     }
