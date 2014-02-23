@@ -10,4 +10,24 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.googlecode.javacv</groupId>
+            <artifactId>javacv</artifactId>
+            <version>0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.javacv</groupId>
+            <artifactId>javacv</artifactId>
+            <classifier>windows-x86_64</classifier>
+            <version>0.7</version>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>javacv</id>
+            <name>JavaCV Repository</name>
+            <url>http://maven2.javacv.googlecode.com/git/</url>
+        </repository>
+    </repositories>
 </project>
