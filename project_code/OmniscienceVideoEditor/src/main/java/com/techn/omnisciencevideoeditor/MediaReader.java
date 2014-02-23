@@ -7,16 +7,16 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class VideoReader {
+public class MediaReader {
 
     private final FrameGrabber frameGrabber;
 
-    public VideoReader(File videoFile) throws FrameGrabber.Exception {
+    public MediaReader(File videoFile) throws FrameGrabber.Exception {
         frameGrabber = new FFmpegFrameGrabber(videoFile);
         frameGrabber.start();
     }
 
-    public Dimension getVideoDimension() {
+    public Dimension getDimension() {
         return new Dimension(frameGrabber.getImageWidth(), frameGrabber.getImageHeight());
     }
 

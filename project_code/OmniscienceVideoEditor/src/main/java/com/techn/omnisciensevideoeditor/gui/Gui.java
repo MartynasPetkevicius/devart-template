@@ -2,7 +2,7 @@ package com.techn.omnisciensevideoeditor.gui;
 
 import com.googlecode.javacv.FrameGrabber;
 import com.techn.omnisciencevideoeditor.ImageUtils;
-import com.techn.omnisciencevideoeditor.VideoReader;
+import com.techn.omnisciencevideoeditor.MediaReader;
 import com.techn.omnisciencevideoeditor.screendetector.Filter;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,8 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -41,8 +39,8 @@ public class Gui {
     private PreviewPanel previewPanel;
     private final Filter filter = new Filter(100);
     private BufferedImage currentImage;
-    private VideoReader videoReader;
-    private Thread playVideoThread;
+    private MediaReader mediaReader;
+    private Thread playMediaThread;
     private boolean playing;
 
     public Gui() {
@@ -145,14 +143,15 @@ public class Gui {
 
     private void stopPlaying() {
         playing = false;
-        if (playVideoThread == null) {
+        if (playMediaThread == null) {
             return;
         }
         try {
-            playVideoThread.join();
+            playMediaThread.join();
         } catch (InterruptedException ex) {
             ex.printStackTrace(System.err);
         }
+        mediaReader.close();
     }
 
     private class BrowseSourceActionListener implements ActionListener {
@@ -163,35 +162,24 @@ public class Gui {
             fileChooser.setCurrentDirectory(new File("."));
             int returnValue = fileChooser.showOpenDialog(frame);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
-                try {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    BufferedImage image = ImageIO.read(selectedFile);
-                    VideoReader videoReader = image == null ? openVideoFile(selectedFile) : null;
-                    if (image == null && videoReader == null) {
-                        JOptionPane.showMessageDialog(frame, "Invalid media file", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    sourceTextField.setText(selectedFile.getAbsolutePath());
-                    if (image != null) {
-                        previewPanel.setSourceDimension(new Dimension(image.getWidth(), image.getHeight()));
-                        currentImage = image;
-                        refreshPreview();
-                    } else {
-                        stopPlaying();
-                        previewPanel.setSourceDimension(videoReader.getVideoDimension());
-                        Gui.this.videoReader = videoReader;
-                        playing = true;
-                        (playVideoThread = new Thread(new PlayVideoTask())).start();
-                    }
-                } catch (IOException ex) {
-                    ex.printStackTrace(System.err);
+                File selectedFile = fileChooser.getSelectedFile();
+                MediaReader mediaReader = openMediaFile(selectedFile);
+                if (mediaReader == null) {
+                    JOptionPane.showMessageDialog(frame, "Invalid media file", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+                sourceTextField.setText(selectedFile.getAbsolutePath());
+                stopPlaying();
+                previewPanel.setSourceDimension(mediaReader.getDimension());
+                Gui.this.mediaReader = mediaReader;
+                playing = true;
+                (playMediaThread = new Thread(new PlayMediaTask())).start();
             }
         }
 
-        private VideoReader openVideoFile(File videoFile) {
+        private MediaReader openMediaFile(File videoFile) {
             try {
-                return new VideoReader(videoFile);
+                return new MediaReader(videoFile);
             } catch (FrameGrabber.Exception ex) {
                 return null;
             }
@@ -211,13 +199,13 @@ public class Gui {
         }
     }
 
-    private class PlayVideoTask implements Runnable {
+    private class PlayMediaTask implements Runnable {
 
         @Override
         public void run() {
             while (playing) {
                 try {
-                    currentImage = videoReader.getNextFrame();
+                    currentImage = mediaReader.getNextFrame();
                     refreshPreview();
                 } catch (FrameGrabber.Exception ex) {
                     ex.printStackTrace(System.err);
