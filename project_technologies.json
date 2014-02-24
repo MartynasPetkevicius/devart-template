@@ -2,7 +2,7 @@
     "technologies": {
         "apis": [],
         "platforms": [],
-        "toolkits": []
+        "toolkits": ["JavaCV", "FFmpeg"]
     },
     "themes": [
         "subject-object problem",
